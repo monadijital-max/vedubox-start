@@ -43,7 +43,7 @@ export default function NewEmployeePage({ onBack }: NewEmployeePageProps) {
     e.preventDefault();
     if (!formData.firstName || !formData.lastName || !formData.email) {
       showDialog({
-        type: 'warning',
+        type: 'alert',
         message: 'Lütfen zorunlu alanları doldurun (Ad, Soyad, E-posta).'
       });
       return;
