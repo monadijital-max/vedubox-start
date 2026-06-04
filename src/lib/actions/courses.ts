@@ -69,7 +69,7 @@ export async function assignCourse(
   await supabase.rpc('increment_course_assigned', {
     course_uuid: courseId,
     increment_by: employees.length,
-  }).catch(() => {}); // rpc optional
+  }).then(null, () => {}); // rpc optional
 
   revalidatePath('/dashboard');
 }

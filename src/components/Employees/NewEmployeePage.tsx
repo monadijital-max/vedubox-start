@@ -53,7 +53,6 @@ export default function NewEmployeePage({ onBack }: NewEmployeePageProps) {
       name: `${formData.firstName} ${formData.lastName}`,
       email: formData.email,
       username: formData.username,
-      password: formData.password,
       phone: formData.phone,
       city: formData.city,
       district: formData.district,
@@ -61,7 +60,7 @@ export default function NewEmployeePage({ onBack }: NewEmployeePageProps) {
       description: formData.description,
       department: formData.department || 'Genel',
       group: 'Tüm Çalışanlar',
-      role: 'Öğrenci / Çalışan'
+      status: 'active'
     });
 
     showDialog({

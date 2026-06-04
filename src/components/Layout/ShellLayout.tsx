@@ -11,6 +11,7 @@ import Settings from '../Settings/Settings';
 import LiveTrainings from '../LiveTrainings/LiveTrainings';
 import Replays from '../Replays/Replays';
 import Exams from '../Exams/Exams';
+import Certificates from '../Certificates/Certificates';
 import CustomDashboard from '../Dashboard/CustomDashboard';
 import ChatbotWidget from './ChatbotWidget';
 import OnboardingWizard from '../FTUE/Wizard';
@@ -31,7 +32,9 @@ export default function ShellLayout() {
     academyConfig, 
     setTab, 
     setDeviceView,
-    setIsCreatingCourse
+    setIsCreatingCourse,
+    courses,
+    employees
   } = useAppStore();
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -85,7 +88,7 @@ export default function ShellLayout() {
     }
   };
 
-  const desktopMenuItems = [
+  const desktopMenuItems: any[] = [
     { id: 'custom_dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { id: 'employees', label: 'Kullanıcılar', icon: Users },
     { id: 'trainings', label: 'Eğitimler', icon: BookOpen },
@@ -169,7 +172,7 @@ export default function ShellLayout() {
               <nav className="space-y-xs">
                 {desktopMenuItems.map((item) => {
                   const Icon = item.icon;
-                  const isActive = activeTab === item.id || (item.subItems && item.subItems.some(sub => sub.id === activeTab));
+                  const isActive = activeTab === item.id || (item.subItems && item.subItems.some((sub: any) => sub.id === activeTab));
                   return (
                     <div key={item.id}>
                       <button 
@@ -198,7 +201,7 @@ export default function ShellLayout() {
                       {/* Accordion Submenu */}
                       {item.subItems && expandedMenu === item.id && (
                         <div className="pl-10 pr-2 py-1 space-y-1 mt-1">
-                          {item.subItems.map(sub => (
+                          {item.subItems.map((sub: any) => (
                             <button
                               key={sub.id}
                               onClick={() => setTab(sub.id as any)}
