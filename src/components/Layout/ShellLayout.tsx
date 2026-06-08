@@ -42,6 +42,7 @@ export default function ShellLayout() {
   const [selectedMobileCourseId, setSelectedMobileCourseId] = useState<string | null>(null);
   const [expandedMenu, setExpandedMenu] = useState<string | null>(null);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isSupportModalOpen, setIsSupportModalOpen] = useState(false);
 
   // Sync Supabase data into Zustand store
@@ -255,10 +256,48 @@ export default function ShellLayout() {
 
               <div className="flex items-center gap-4">
                 {/* Notification Bell */}
-                <button className="relative w-9 h-9 flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-on-surface rounded-full transition-colors border border-outline-variant/30 bg-white">
-                  <Bell className="w-4 h-4" />
-                  <span className="absolute top-2 right-2 w-2 h-2 bg-rose-500 rounded-full border-2 border-white"></span>
-                </button>
+                <div className="relative">
+                  <button 
+                    onClick={() => setIsNotificationsOpen(!isNotificationsOpen)}
+                    className="relative w-9 h-9 flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-on-surface rounded-full transition-colors border border-outline-variant/30 bg-white"
+                  >
+                    <Bell className="w-4 h-4" />
+                    <span className="absolute top-2 right-2 w-2 h-2 bg-rose-500 rounded-full border-2 border-white"></span>
+                  </button>
+
+                  {isNotificationsOpen && (
+                    <div className="absolute right-0 top-full mt-2 w-80 bg-white rounded-xl shadow-lg border border-outline-variant/30 overflow-hidden py-2 animate-fadeIn z-50">
+                      <div className="px-4 py-3 border-b border-outline-variant/30 flex items-center justify-between">
+                        <p className="text-sm font-bold text-on-surface">Bildirimler</p>
+                        <span className="text-xs font-semibold text-primary cursor-pointer hover:underline">Tümünü Okundu İşaretle</span>
+                      </div>
+                      <div className="max-h-[300px] overflow-y-auto">
+                        <div className="px-4 py-3 hover:bg-surface-container-low transition-colors border-b border-outline-variant/10 cursor-pointer">
+                          <p className="text-sm text-on-surface"><span className="font-bold">Ahmet Yılmaz</span> kişisine eğitim atandı.</p>
+                          <p className="text-xs text-on-surface-variant mt-1">10 dakika önce</p>
+                        </div>
+                        <div className="px-4 py-3 hover:bg-surface-container-low transition-colors border-b border-outline-variant/10 cursor-pointer">
+                          <p className="text-sm text-on-surface"><span className="font-bold">Fatma Gülşen</span> CRM Eğitimi'ni bitirdi.</p>
+                          <p className="text-xs text-on-surface-variant mt-1">1 saat önce</p>
+                        </div>
+                        <div className="px-4 py-3 hover:bg-surface-container-low transition-colors border-b border-outline-variant/10 cursor-pointer bg-blue-50/50">
+                          <div className="flex items-center gap-2 mb-1">
+                            <div className="w-2 h-2 rounded-full bg-blue-500"></div>
+                            <p className="text-sm text-on-surface"><span className="font-bold">Mehmet Demir</span> yeni bir soru ekledi.</p>
+                          </div>
+                          <p className="text-xs text-on-surface-variant ml-4">2 saat önce</p>
+                        </div>
+                        <div className="px-4 py-3 hover:bg-surface-container-low transition-colors cursor-pointer">
+                          <p className="text-sm text-on-surface">Sistem güncellemesi tamamlandı.</p>
+                          <p className="text-xs text-on-surface-variant mt-1">Dün</p>
+                        </div>
+                      </div>
+                      <div className="px-4 py-2 border-t border-outline-variant/30 text-center">
+                        <span className="text-sm font-bold text-primary cursor-pointer hover:underline">Tüm Bildirimleri Gör</span>
+                      </div>
+                    </div>
+                  )}
+                </div>
 
                 {/* Role Switch Dropdown */}
                 <div className="relative">

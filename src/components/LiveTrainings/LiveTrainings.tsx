@@ -39,7 +39,6 @@ export default function LiveTrainings() {
               <select className="text-sm font-bold text-primary bg-transparent border-b border-outline-variant/30 pb-1 pr-6 pl-2 outline-none cursor-pointer appearance-none w-28">
                 <option>Hepsi</option>
               </select>
-              <ChevronDown className="w-4 h-4 text-primary absolute right-0 bottom-1.5 pointer-events-none" />
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -48,7 +47,6 @@ export default function LiveTrainings() {
               <select className="text-sm font-bold text-primary bg-transparent border-b border-outline-variant/30 pb-1 pr-6 pl-2 outline-none cursor-pointer appearance-none w-28">
                 <option>Hepsi</option>
               </select>
-              <ChevronDown className="w-4 h-4 text-primary absolute right-0 bottom-1.5 pointer-events-none" />
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -57,7 +55,6 @@ export default function LiveTrainings() {
               <select className="text-sm font-bold text-primary bg-transparent border-b border-outline-variant/30 pb-1 pr-6 pl-2 outline-none cursor-pointer appearance-none w-28">
                 <option>Hepsi</option>
               </select>
-              <ChevronDown className="w-4 h-4 text-primary absolute right-0 bottom-1.5 pointer-events-none" />
             </div>
           </div>
         </div>
@@ -107,10 +104,10 @@ export default function LiveTrainings() {
 
       {/* Main View Area */}
       {viewMode === 'grid' ? (
-        <div className="flex-1 flex gap-2">
+        <div className="flex-1 grid grid-cols-5 gap-2">
         
         {/* Tuesday */}
-        <div className="flex-1 flex flex-col border-r border-outline-variant/20">
+        <div className="flex-1 flex flex-col">
           <div className="text-center py-4 border-b border-transparent">
             <h4 className="font-bold text-sm text-on-surface">Salı</h4>
             <p className="text-xs text-on-surface-variant">02/06/2026</p>
@@ -119,14 +116,14 @@ export default function LiveTrainings() {
         </div>
 
         {/* Wednesday */}
-        <div className="flex-1 flex flex-col border-r border-outline-variant/20">
+        <div className="flex-1 flex flex-col">
           <div className="text-center py-4 border-b border-transparent">
             <h4 className="font-bold text-sm text-on-surface">Çarşamba</h4>
             <p className="text-xs text-on-surface-variant">03/06/2026</p>
           </div>
           <div className="flex-1 p-2 bg-surface-container-lowest flex flex-col gap-3">
             {/* Past Training 1 */}
-            <div className="bg-[#F8F9FF] rounded-[16px] border border-[#E9E9F3] p-4 relative opacity-80">
+            <div className="bg-[#F8F9FF] rounded-[16px] border border-[#E9E9F3] hover:shadow-md transition-shadow p-4 relative opacity-80">
               <h3 className="text-sm font-bold text-on-surface mb-1 pr-8">Şirket İçi İletişim</h3>
               <div className="flex flex-col gap-0.5 mb-4">
                 <span className="text-xs text-on-surface-variant">09:00 - 11:30</span>
@@ -148,7 +145,7 @@ export default function LiveTrainings() {
             </div>
 
             {/* Past Training 2 */}
-            <div className="bg-[#F8F9FF] rounded-[16px] border border-[#E9E9F3] p-4 relative opacity-80">
+            <div className="bg-[#F8F9FF] rounded-[16px] border border-[#E9E9F3] hover:shadow-md transition-shadow p-4 relative opacity-80">
               <h3 className="text-sm font-bold text-on-surface mb-1 pr-8">Zaman Yönetimi</h3>
               <div className="flex flex-col gap-0.5 mb-4">
                 <span className="text-xs text-on-surface-variant">13:00 - 15:00</span>
@@ -175,7 +172,7 @@ export default function LiveTrainings() {
         </div>
 
         {/* Thursday (Active) */}
-        <div className="flex-1 flex flex-col border border-outline-variant/20 bg-[#f8fbff] rounded-t-xl relative">
+        <div className="flex-1 flex flex-col bg-[#f8fbff] rounded-t-xl relative">
           <div className="text-center py-3 bg-[#1d7bf2] text-white rounded-xl shadow-md z-10 mx-1 -mt-1 border border-blue-600">
             <h4 className="font-bold text-sm">Perşembe</h4>
             <p className="text-xs opacity-90">04/06/2026</p>
@@ -183,7 +180,7 @@ export default function LiveTrainings() {
           
           <div className="flex-1 p-2 bg-[#f8fbff] flex flex-col gap-3">
             {/* Nearest Current Training 1 */}
-            <div className={`bg-white rounded-[16px] shadow-sm p-4 relative ${activeMenu === 'current1' ? 'z-20' : 'z-10'}`}>
+            <div className={`bg-white rounded-[16px] shadow-sm hover:shadow-md transition-shadow p-4 relative ${activeMenu === 'current1' ? 'z-20' : 'z-10'}`}>
               <h3 className="text-sm font-bold text-on-surface mb-1 pr-6">CRM EĞİTİMİ 1. GÜN</h3>
               <div className="flex flex-col gap-0.5 mb-3">
                 <span className="text-xs text-on-surface-variant">10:05 - 16:45</span>
@@ -253,7 +250,7 @@ export default function LiveTrainings() {
             </div>
 
             {/* Nearest Current Training 2 */}
-            <div className={`bg-white rounded-[16px] shadow-sm p-4 relative ${activeMenu === 'current2' ? 'z-20' : 'z-10'}`}>
+            <div className={`bg-white rounded-[16px] shadow-sm hover:shadow-md transition-shadow p-4 relative ${activeMenu === 'current2' ? 'z-20' : 'z-10'}`}>
               <h3 className="text-sm font-bold text-on-surface mb-1 pr-6">İLETİŞİM BECERİLERİ</h3>
               <div className="flex flex-col gap-0.5 mb-3">
                 <span className="text-xs text-on-surface-variant">17:00 - 18:30</span>
@@ -325,14 +322,14 @@ export default function LiveTrainings() {
         </div>
 
         {/* Friday */}
-        <div className="flex-1 flex flex-col border-l border-r border-outline-variant/20">
+        <div className="flex-1 flex flex-col">
           <div className="text-center py-4 border-b border-transparent">
             <h4 className="font-bold text-sm text-on-surface">Cuma</h4>
             <p className="text-xs text-on-surface-variant">05/06/2026</p>
           </div>
           <div className="flex-1 p-2 bg-surface-container-lowest flex flex-col gap-3">
             {/* Future Training 1 */}
-            <div className={`bg-[#0EA5E9] rounded-[16px] shadow-sm p-4 relative text-white ${activeMenu === 'future1' ? 'z-20' : 'z-10'}`}>
+            <div className={`bg-[#0EA5E9] rounded-[16px] shadow-sm hover:shadow-md transition-shadow p-4 relative text-white ${activeMenu === 'future1' ? 'z-20' : 'z-10'}`}>
               <h3 className="text-sm font-bold mb-1 pr-6">Liderlik Eğitimi</h3>
               <div className="flex flex-col gap-0.5 mb-3">
                 <span className="text-xs text-white/80">14:00 - 16:00</span>
@@ -399,7 +396,7 @@ export default function LiveTrainings() {
             </div>
 
             {/* Future Training 2 */}
-            <div className={`bg-[#0EA5E9] rounded-[16px] shadow-sm p-4 relative text-white ${activeMenu === 'future2' ? 'z-20' : 'z-10'}`}>
+            <div className={`bg-[#0EA5E9] rounded-[16px] shadow-sm hover:shadow-md transition-shadow p-4 relative text-white ${activeMenu === 'future2' ? 'z-20' : 'z-10'}`}>
               <h3 className="text-sm font-bold mb-1 pr-6">Stres Yönetimi</h3>
               <div className="flex flex-col gap-0.5 mb-3">
                 <span className="text-xs text-white/80">16:30 - 18:00</span>

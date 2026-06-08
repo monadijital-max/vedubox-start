@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, ChevronDown, MoreVertical, Play, Calendar, Clock, Filter, Trash2, FileText, Image as ImageIcon } from 'lucide-react';
+import { Search, ChevronDown, MoreVertical, Play, Calendar, Clock, Filter, Trash2, FileText, Image as ImageIcon, X, Download } from 'lucide-react';
 
 const MOCK_REPLAYS = [
   { id: 1, title: '8888 31.12.2025', date: '31/12/2025', time: '10:00', duration: '6', category: 'Eğitim', course: 'tekrar izle f' },
@@ -13,6 +13,7 @@ export default function Replays() {
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeDropdownId, setActiveDropdownId] = useState<number | null>(null);
+  const [showReportModal, setShowReportModal] = useState<number | null>(null);
 
   const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
@@ -205,13 +206,15 @@ export default function Replays() {
                               <Play className="w-4 h-4 text-slate-400" />
                               İzle
                             </button>
-                            <button className="w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-indigo-600 flex items-center gap-3 transition-colors">
+                            <button 
+                              onClick={() => {
+                                setShowReportModal(item.id);
+                                setActiveDropdownId(null);
+                              }}
+                              className="w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-indigo-600 flex items-center gap-3 transition-colors"
+                            >
                               <FileText className="w-4 h-4 text-slate-400" />
                               İzleme Raporu
-                            </button>
-                            <button className="w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-indigo-600 flex items-center gap-3 transition-colors">
-                              <ImageIcon className="w-4 h-4 text-slate-400" />
-                              Video Resmi Ekle
                             </button>
                             <div className="h-px bg-slate-100 my-1"></div>
                             <button className="w-full text-left px-4 py-2.5 text-sm font-semibold text-rose-600 hover:bg-rose-50 flex items-center gap-3 transition-colors">
@@ -257,6 +260,95 @@ export default function Replays() {
           </div>
         </div>
       </div>
+
+      {/* Report Modal */}
+      {showReportModal !== null && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-slate-900/50 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-white w-full max-w-4xl rounded-[20px] shadow-2xl flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-200">
+            {/* Modal Header */}
+            <div className="flex justify-between items-center p-6 border-b border-slate-100 relative">
+              <h3 className="text-xl font-bold text-[#1e1e2d] w-full text-center">İzleme Raporu</h3>
+              <button 
+                onClick={() => setShowReportModal(null)}
+                className="absolute right-6 top-6 text-slate-400 hover:text-slate-600 transition-colors"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <div className="p-6 overflow-y-auto flex-1">
+              <div className="flex justify-end items-center gap-4 mb-6">
+
+                <div className="relative">
+                  <select className="appearance-none bg-white border-b border-slate-200 text-slate-700 text-sm font-medium px-2 py-1 pr-8 focus:outline-none focus:border-indigo-500 transition-colors cursor-pointer">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                  </select>
+                  <ChevronDown className="w-4 h-4 text-slate-400 absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" />
+                </div>
+                <div className="relative w-48">
+                  <input 
+                    type="text" 
+                    placeholder="Ara..." 
+                    className="w-full bg-transparent border-b border-slate-200 text-sm px-2 py-1 focus:outline-none focus:border-indigo-500 transition-colors placeholder:text-slate-400"
+                  />
+                </div>
+                <button className="p-2 text-white bg-[#383FD8] border border-transparent rounded-lg hover:bg-[#383FD8]/90 transition-colors shadow-sm">
+                  <Download className="w-5 h-5" />
+                </button>
+              </div>
+
+              <div className="bg-white rounded-xl overflow-hidden border border-slate-200">
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr className="bg-slate-50/50 text-slate-500 text-sm font-semibold tracking-wider">
+                      <th className="py-4 px-6">#</th>
+                      <th className="py-4 px-6">
+                        <div className="flex items-center gap-1 cursor-pointer hover:text-indigo-600">Ad <ChevronDown className="w-3 h-3" /></div>
+                      </th>
+                      <th className="py-4 px-6">
+                        <div className="flex items-center gap-1 cursor-pointer hover:text-indigo-600">Soyad <ChevronDown className="w-3 h-3" /></div>
+                      </th>
+                      <th className="py-4 px-6">
+                        <div className="flex items-center gap-1 cursor-pointer hover:text-indigo-600">E-Posta <ChevronDown className="w-3 h-3" /></div>
+                      </th>
+                      <th className="py-4 px-6">
+                        <div className="flex items-center gap-1 cursor-pointer hover:text-indigo-600">İzleme Tarihi <ChevronDown className="w-3 h-3" /></div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100">
+                    <tr className="hover:bg-slate-50 transition-colors">
+                      <td className="py-4 px-6 text-sm text-slate-500">1</td>
+                      <td className="py-4 px-6 text-sm text-slate-700">Mustafa</td>
+                      <td className="py-4 px-6 text-sm text-slate-700">Ersoy</td>
+                      <td className="py-4 px-6 text-sm text-slate-700">1mustafaersoy+1@gmail.com</td>
+                      <td className="py-4 px-6 text-sm text-slate-700">02/01/2026 11:56</td>
+                    </tr>
+                    <tr className="hover:bg-slate-50 transition-colors">
+                      <td className="py-4 px-6 text-sm text-slate-500">2</td>
+                      <td className="py-4 px-6 text-sm text-slate-700">Tuce</td>
+                      <td className="py-4 px-6 text-sm text-slate-700">Ergün</td>
+                      <td className="py-4 px-6 text-sm text-slate-700">tugceergunn0@gmail.com</td>
+                      <td className="py-4 px-6 text-sm text-slate-700">10/12/2025 10:55</td>
+                    </tr>
+                    <tr className="hover:bg-slate-50 transition-colors">
+                      <td className="py-4 px-6 text-sm text-slate-500">3</td>
+                      <td className="py-4 px-6 text-sm text-slate-700">Elina</td>
+                      <td className="py-4 px-6 text-sm text-slate-700">Elina</td>
+                      <td className="py-4 px-6 text-sm text-slate-700">n@gmail.com</td>
+                      <td className="py-4 px-6 text-sm text-slate-700">26/01/2026 10:23</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -135,7 +135,7 @@ export default function Certificates() {
                   download={`Sertifika-${cert.title}.jpg`}
                   target="_blank"
                   rel="noreferrer"
-                  className="w-10 h-10 shrink-0 flex items-center justify-center border border-outline-variant/40 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors"
+                  className="w-10 h-10 shrink-0 flex items-center justify-center bg-[#383FD8] text-white rounded-lg hover:bg-[#383FD8]/90 transition-colors shadow-sm"
                 >
                   <Download className="w-4 h-4" />
                 </a>
@@ -221,7 +221,7 @@ export default function Certificates() {
                   download={`Sertifika-${previewCert.title}.jpg`}
                   target="_blank"
                   rel="noreferrer"
-                  className="px-6 py-2.5 bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition-colors flex items-center gap-2"
+                  className="px-6 py-2.5 bg-[#383FD8] text-white font-bold rounded-lg hover:bg-[#383FD8]/90 transition-colors flex items-center gap-2 shadow-sm"
                 >
                   <Download className="w-4 h-4" />
                   İndir
