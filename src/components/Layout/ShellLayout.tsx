@@ -13,6 +13,7 @@ import Replays from '../Replays/Replays';
 import Exams from '../Exams/Exams';
 import Certificates from '../Certificates/Certificates';
 import CustomDashboard from '../Dashboard/CustomDashboard';
+import Dashboard2 from '../Dashboard2/Dashboard2';
 import ChatbotWidget from './ChatbotWidget';
 import OnboardingWizard from '../FTUE/Wizard';
 import GlobalDialogs from '../GlobalDialogs';
@@ -40,7 +41,29 @@ export default function ShellLayout() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileActiveSubTab, setMobileActiveSubTab] = useState<'home' | 'courses' | 'reports' | 'profile'>('home');
   const [selectedMobileCourseId, setSelectedMobileCourseId] = useState<string | null>(null);
-  const [expandedMenu, setExpandedMenu] = useState<string | null>(null);
+  
+  const desktopMenuItems: any[] = [
+    { 
+      id: 'dashboards', 
+      label: 'Ana Sayfa', 
+      icon: Home,
+      subItems: [
+        { id: 'custom_dashboard', label: 'Dashboard 1' },
+        { id: 'dashboard2', label: 'Dashboard 2' }
+      ]
+    },
+    { id: 'employees', label: 'Kullanıcılar', icon: Users },
+    { id: 'trainings', label: 'Eğitimler', icon: BookOpen },
+    { id: 'live_trainings', label: 'Canlı Eğitim', icon: Video },
+    { id: 'replays', label: 'Tekrar İzle', icon: RotateCcw },
+    { id: 'exams', label: 'Sınav', icon: FileText },
+    { id: 'reports', label: 'Raporlar', icon: BarChart2 },
+    { id: 'settings', label: 'Ayarlar', icon: SettingsIcon },
+  ] as const;
+
+  const [expandedMenu, setExpandedMenu] = useState<string | null>(
+    desktopMenuItems.find(m => m.subItems?.some((s: any) => s.id === activeTab))?.id || null
+  );
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isSupportModalOpen, setIsSupportModalOpen] = useState(false);
@@ -68,6 +91,8 @@ export default function ShellLayout() {
     switch (activeTab) {
       case 'custom_dashboard':
         return <CustomDashboard />;
+      case 'dashboard2':
+        return <Dashboard2 />;
       case 'employees':
         return <Employees />;
       case 'trainings':
@@ -88,17 +113,6 @@ export default function ShellLayout() {
         return <CustomDashboard />;
     }
   };
-
-  const desktopMenuItems: any[] = [
-    { id: 'custom_dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { id: 'employees', label: 'Kullanıcılar', icon: Users },
-    { id: 'trainings', label: 'Eğitimler', icon: BookOpen },
-    { id: 'live_trainings', label: 'Canlı Eğitim', icon: Video },
-    { id: 'replays', label: 'Tekrar İzle', icon: RotateCcw },
-    { id: 'exams', label: 'Sınav', icon: FileText },
-    { id: 'reports', label: 'Raporlar', icon: BarChart2 },
-    { id: 'settings', label: 'Ayarlar', icon: SettingsIcon },
-  ] as const;
 
   return (
     <div className="min-h-screen bg-background flex flex-col transition-colors duration-300">
@@ -165,7 +179,7 @@ export default function ShellLayout() {
                   </div>
                 </div>
                 <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
-                  <h1 className="text-lg font-bold text-[#1e1e2d] leading-tight tracking-tight">OCNUM.</h1>
+                  <h1 className="text-lg font-bold text-[#1e1e2d] leading-tight tracking-tight">VEDUSTART</h1>
                 </div>
               </div>
 
@@ -201,15 +215,15 @@ export default function ShellLayout() {
 
                       {/* Accordion Submenu */}
                       {item.subItems && expandedMenu === item.id && (
-                        <div className="pl-10 pr-2 py-1 space-y-1 mt-1">
+                        <div className="pl-10 pr-2 py-1 space-y-1 mt-1 hidden group-hover:block">
                           {item.subItems.map((sub: any) => (
                             <button
                               key={sub.id}
                               onClick={() => setTab(sub.id as any)}
-                              className={`w-full text-left px-3 py-2 text-sm font-bold rounded-md transition-colors ${
+                              className={`w-full text-left px-3 py-2.5 text-sm font-bold rounded-lg transition-colors ${
                                 activeTab === sub.id 
-                                  ? 'bg-primary/10 text-primary' 
-                                  : 'text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface'
+                                  ? 'bg-[#383fd8]/10 text-[#383fd8]' 
+                                  : 'text-slate-500 hover:bg-slate-50 hover:text-slate-700'
                               }`}
                             >
                               {sub.label}
@@ -243,7 +257,7 @@ export default function ShellLayout() {
           {/* MAIN DESKTOP PANEL AREA */}
           <main className="flex-1 bg-surface-container-lowest flex flex-col min-w-0">
             {/* Global Desktop Header */}
-            <div className={`h-16 bg-white border-b border-outline-variant/30 flex justify-between items-center pl-lg ${activeTab === 'custom_dashboard' ? 'pr-lg xl:pr-[340px]' : 'pr-lg'} shrink-0 sticky top-0 z-40 shadow-sm transition-all duration-300`}>
+            <div className={`h-16 bg-white border-b border-outline-variant/30 flex justify-between items-center pl-lg ${(activeTab === 'custom_dashboard' || activeTab === 'dashboard2') ? 'pr-lg xl:pr-[340px]' : 'pr-lg'} shrink-0 sticky top-0 z-40 shadow-sm transition-all duration-300`}>
                 {/* Search Bar */}
               <div className="w-[400px] relative">
                 <Search className="w-4 h-4 text-on-surface-variant absolute right-4 top-1/2 -translate-y-1/2" />
@@ -357,10 +371,24 @@ export default function ShellLayout() {
               </div>
             </div>
             </div>
-            <div className={`flex-1 overflow-y-auto ${activeTab === 'custom_dashboard' ? 'p-0' : 'p-lg'}`}>
-              <div className={`${activeTab === 'custom_dashboard' ? 'w-full h-full' : 'max-w-6xl mx-auto'}`}>
-                {renderDesktopContent()}
-              </div>
+            <div className={`flex-1 overflow-y-auto ${(activeTab === 'custom_dashboard' || activeTab === 'dashboard2') ? 'p-0' : 'p-lg'}`}>
+              {activeTab === 'custom_dashboard' && (
+                <div className="w-full h-full">
+                  {renderDesktopContent()}
+                </div>
+              )}
+              {activeTab === 'dashboard2' && (
+                <div className="w-full min-h-full bg-slate-50">
+                  <div className="max-w-6xl mx-auto p-6">
+                    {renderDesktopContent()}
+                  </div>
+                </div>
+              )}
+              {activeTab !== 'custom_dashboard' && activeTab !== 'dashboard2' && (
+                <div className="max-w-6xl mx-auto">
+                  {renderDesktopContent()}
+                </div>
+              )}
             </div>
           </main>
 

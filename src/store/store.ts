@@ -73,7 +73,7 @@ export interface AcademyConfig {
 
 interface AppState {
   // Navigation & Simulator
-  activeTab: 'dashboard' | 'custom_dashboard' | 'employees' | 'trainings' | 'live_trainings' | 'replays' | 'exams' | 'reports' | 'certificates' | 'settings';
+  activeTab: 'dashboard' | 'custom_dashboard' | 'dashboard2' | 'employees' | 'trainings' | 'live_trainings' | 'replays' | 'exams' | 'reports' | 'certificates' | 'settings';
   deviceView: 'desktop' | 'mobile' | 'tablet';
   theme: 'light' | 'dark';
   isCreatingCourse: boolean;
@@ -481,7 +481,7 @@ for (let i = 6; i <= 48; i++) {
 // Create the Zustand store
 export const useAppStore = create<AppState>((set, get) => ({
   // Navigation & Simulator defaults
-  activeTab: 'custom_dashboard',
+  activeTab: 'dashboard2',
   deviceView: 'desktop',
   theme: 'light',
   isCreatingCourse: false,
