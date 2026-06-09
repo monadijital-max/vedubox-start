@@ -14,6 +14,7 @@ import Exams from '../Exams/Exams';
 import Certificates from '../Certificates/Certificates';
 import CustomDashboard from '../Dashboard/CustomDashboard';
 import Dashboard2 from '../Dashboard2/Dashboard2';
+import AdminDashboard from '../AdminDashboard/AdminDashboard';
 import ChatbotWidget from './ChatbotWidget';
 import OnboardingWizard from '../FTUE/Wizard';
 import GlobalDialogs from '../GlobalDialogs';
@@ -29,6 +30,8 @@ import {
 export default function ShellLayout() {
   const { 
     activeTab, 
+    activeRole,
+    setRole,
     deviceView, 
     academyConfig, 
     setTab, 
@@ -64,6 +67,7 @@ export default function ShellLayout() {
   const [expandedMenu, setExpandedMenu] = useState<string | null>(
     desktopMenuItems.find(m => m.subItems?.some((s: any) => s.id === activeTab))?.id || null
   );
+  const [isRoleDropdownOpen, setIsRoleDropdownOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isSupportModalOpen, setIsSupportModalOpen] = useState(false);
@@ -88,6 +92,10 @@ export default function ShellLayout() {
 
   // Render correct component based on active tab for desktop view
   const renderDesktopContent = () => {
+    if (activeRole === 'admin' && (activeTab === 'dashboard' || activeTab === 'custom_dashboard' || activeTab === 'dashboard2')) {
+      return <AdminDashboard />;
+    }
+
     switch (activeTab) {
       case 'custom_dashboard':
         return <CustomDashboard />;
@@ -238,19 +246,6 @@ export default function ShellLayout() {
 
             </div>
 
-            {/* Sidebar bottom modules */}
-            <div className="p-md border-t border-outline-variant/40">
-              <button 
-                onClick={() => {
-                  setTab('trainings');
-                  setIsCreatingCourse(true);
-                }}
-                className="w-full flex items-center justify-center gap-2 text-on-surface-variant hover:text-on-surface transition-all p-2"
-                title="Ayarlar"
-              >
-                <SettingsIcon className="w-5 h-5 shrink-0" />
-              </button>
-            </div>
 
           </aside>
 
@@ -313,20 +308,47 @@ export default function ShellLayout() {
                   )}
                 </div>
 
-                {/* Role Switch Dropdown */}
+                {/* Custom Role Switch Dropdown */}
                 <div className="relative">
-                  <select className="appearance-none bg-white border border-outline-variant/30 hover:border-outline-variant/50 transition-colors rounded-full pl-4 pr-9 py-2 text-xs font-bold text-on-surface focus:outline-none focus:border-primary cursor-pointer shadow-sm">
-                    <option value="admin">Admin (Yönetici)</option>
-                    <option value="kullanici">Kullanıcı (Öğrenci)</option>
-                  </select>
-                  <ChevronDown className="w-4 h-4 text-on-surface-variant absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                  <button 
+                    onClick={() => setIsRoleDropdownOpen(!isRoleDropdownOpen)}
+                    className="flex items-center gap-2 bg-surface-container-low px-4 h-11 rounded-full border border-outline-variant/30 hover:border-outline-variant/50 transition-all focus:outline-none shadow-sm"
+                  >
+                    <span className="text-xs font-bold text-on-surface">
+                      {activeRole === 'admin' ? 'Admin (Yönetici)' : activeRole === 'instructor' ? 'Eğitmen' : 'Kullanıcı (Öğrenci)'}
+                    </span>
+                    <ChevronDown className={`w-4 h-4 text-on-surface-variant transition-transform ${isRoleDropdownOpen ? 'rotate-180' : 'rotate-0'}`} />
+                  </button>
+
+                  {isRoleDropdownOpen && (
+                    <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-xl shadow-lg border border-outline-variant/30 overflow-hidden py-1 animate-fadeIn z-50">
+                      <button 
+                        onClick={() => { setRole('admin'); setIsRoleDropdownOpen(false); }}
+                        className={`w-full text-left px-4 py-2.5 text-xs font-bold transition-colors ${activeRole === 'admin' ? 'bg-[#383fd8]/10 text-[#383fd8]' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'}`}
+                      >
+                        Admin (Yönetici)
+                      </button>
+                      <button 
+                        onClick={() => { setRole('instructor'); setIsRoleDropdownOpen(false); }}
+                        className={`w-full text-left px-4 py-2.5 text-xs font-bold transition-colors ${activeRole === 'instructor' ? 'bg-[#383fd8]/10 text-[#383fd8]' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'}`}
+                      >
+                        Eğitmen
+                      </button>
+                      <button 
+                        onClick={() => { setRole('student'); setIsRoleDropdownOpen(false); }}
+                        className={`w-full text-left px-4 py-2.5 text-xs font-bold transition-colors ${activeRole === 'student' ? 'bg-[#383fd8]/10 text-[#383fd8]' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'}`}
+                      >
+                        Kullanıcı (Öğrenci)
+                      </button>
+                    </div>
+                  )}
                 </div>
 
               {/* Profile Widget Dropdown */}
               <div className="relative">
                 <button 
                   onClick={() => setIsProfileOpen(!isProfileOpen)}
-                  className="flex items-center gap-sm bg-surface-container-low px-3 py-1.5 rounded-full border border-outline-variant/30 hover:bg-surface-container transition-all"
+                  className="flex items-center gap-sm bg-surface-container-low px-3 h-11 rounded-full border border-outline-variant/30 hover:bg-surface-container transition-all"
                 >
                   <div className="relative w-8 h-8 rounded-full shrink-0">
                     <img src="https://i.pravatar.cc/150?img=5" alt="Ayşe Yılmaz" className="w-8 h-8 rounded-full object-cover border border-outline-variant/30" />
