@@ -74,6 +74,7 @@ export interface AcademyConfig {
 interface AppState {
   // Navigation & Simulator
   activeTab: 'dashboard' | 'custom_dashboard' | 'dashboard2' | 'employees' | 'trainings' | 'live_trainings' | 'replays' | 'exams' | 'reports' | 'certificates' | 'settings';
+  activeRole: 'admin' | 'instructor' | 'student';
   deviceView: 'desktop' | 'mobile' | 'tablet';
   theme: 'light' | 'dark';
   isCreatingCourse: boolean;
@@ -96,6 +97,7 @@ interface AppState {
   showDialog: (dialog: Omit<GlobalDialog, 'id'>) => void;
   closeDialog: (id: string) => void;
   setTab: (tab: AppState['activeTab']) => void;
+  setRole: (role: AppState['activeRole']) => void;
   setDeviceView: (view: AppState['deviceView']) => void;
   setTheme: (theme: AppState['theme']) => void;
   setIsCreatingCourse: (v: boolean) => void;
@@ -482,6 +484,7 @@ for (let i = 6; i <= 48; i++) {
 export const useAppStore = create<AppState>((set, get) => ({
   // Navigation & Simulator defaults
   activeTab: 'dashboard2',
+  activeRole: 'instructor',
   deviceView: 'desktop',
   theme: 'light',
   isCreatingCourse: false,
@@ -518,6 +521,7 @@ export const useAppStore = create<AppState>((set, get) => ({
     globalDialogs: state.globalDialogs.filter(d => d.id !== id)
   })),
   setTab: (tab) => set({ activeTab: tab }),
+  setRole: (role) => set({ activeRole: role }),
   setDeviceView: (view) => set({ deviceView: view }),
   setTheme: (theme) => set({ theme }),
   setIsCreatingCourse: (v) => set({ isCreatingCourse: v }),
